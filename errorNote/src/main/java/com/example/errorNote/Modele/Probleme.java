@@ -23,11 +23,13 @@ public class Probleme {
     private String descriptionProbleme;
     private Date dateProbleme;
 
+    //================LA CLEF PRIMAIRE DE LA CLASSE UTILISATEUR=========================
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "id_utilisateur")
     private Utilisateur utilisateur;
 
+    //================LA CLEF PRIMAIRE DE LA CLASSE ETAT=========================
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "id_etat")

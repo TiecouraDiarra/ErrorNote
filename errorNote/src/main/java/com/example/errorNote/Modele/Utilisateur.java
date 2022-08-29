@@ -23,8 +23,10 @@ public class Utilisateur {
     private String prenomUtilisateur;
     private String numeroUtilisateur;
     private String emailUtilisateur;
+    private String password;
 
 
+    //================LA CLEF PRIMAIRE DE LA CLASSE ROLE=========================
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "id_role")

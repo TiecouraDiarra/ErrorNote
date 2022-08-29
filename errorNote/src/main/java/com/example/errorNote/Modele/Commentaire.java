@@ -19,10 +19,12 @@ public class Commentaire {
     private Long idComm;
     private String commentaire;
 
+    //================LA CLEF PRIMAIRE DE LA CLASSE SOLUTION=========================
     @ManyToOne
     @JoinColumn(name = "id_solution")
     private Solution solution;
 
+    //================LA CLEF PRIMAIRE DE LA CLASSE UTILISATEUR=========================
     @ManyToOne
     @JoinColumn(name = "id_utilisateurs")
     private Utilisateur AutresUtilisateurs;

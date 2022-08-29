@@ -11,10 +11,14 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class RoleImpl implements RoleService{
 
+    //================LA DEPENDANCE DU REPOSITORY DE ROLE=========================
     @Autowired
     private RepoRole repoRole;
+
+    //================DEBUT DE LA METHODE PERMETTANT DE RECUPERER L'IDENTIFIANT D'UN ROLE=========================
     @Override
     public Role RecupererParIdRole(Long idRole) {
         return repoRole.findById(idRole).get();
     }
+    //================FIN DE LA METHODE PERMETTANT DE RECUPERER L'IDENTIFIANT D'UN ROLE=========================
 }

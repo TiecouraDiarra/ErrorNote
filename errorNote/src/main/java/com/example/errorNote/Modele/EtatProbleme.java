@@ -18,4 +18,8 @@ public class EtatProbleme {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEtat;
     private String Etat;
+
+    public EtatProbleme(long l) {
+        this.idEtat = l;
+    }
 }

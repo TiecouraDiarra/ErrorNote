@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "CreerSolution")
+@RequestMapping(value = "Solution")
 @NoArgsConstructor
 @AllArgsConstructor
 @Api(value = "hello", description = "Gestion des solutions")
@@ -28,10 +28,23 @@ public class ControllerSolution {
         Probleme probleme = problemeService.RecupererParIdProbleme(idProbleme);
         if(probleme!=null){
             solution.setProbleme(probleme);
-            return solutionService.CreerSolution(solution);
+            solutionService.CreerSolution(solution);
+            return "Solution créée avec succès";
         } else {
-            return "Vous essayez de créer un problème par un utilisateur qui n'existe pas !";
+            return "Vous essayez de donner la solution d'un problème qui n'existe pas !";
         }
         //System.out.println("Solution ajoutée avec succès");
+    }
+
+    @ApiOperation(value = "Modifier une solution ")
+    @PutMapping("/modifier/{idSolution}")
+    public Solution update(@PathVariable Long idSolution, @RequestBody Solution solution){
+        return solutionService.ModifierSolution(idSolution, solution);
+    }
+
+    @ApiOperation(value = "Supprimer une solution")
+    @DeleteMapping("/supprimer/{idSolution}")
+    public String delete(@PathVariable Long idSolution){
+        return solutionService.SupprimerSolution(idSolution);
     }
 }
