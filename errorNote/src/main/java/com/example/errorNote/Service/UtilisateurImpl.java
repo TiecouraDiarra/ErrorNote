@@ -68,9 +68,9 @@ public class UtilisateurImpl implements UtilisateurService {
 
 
     //================DEBUT DE LA METHODE PERMETTANT DE RECUPERER L'EMAIL D'UN UTILISATEUR=========================
-    /*@Override
+    @Override
     public Utilisateur TrouverParEmail(String emailUtilisateur) {
-        return repoUtilisateur.findByEmail(emailUtilisateur);
-    }*/
+        return repoUtilisateur.findByEmailUtilisateur(emailUtilisateur);
+    }
     //================FIN DE LA METHODE PERMETTANT DE RECUPERER L'EMAIL D'UN UTILISATEUR=========================
 }

@@ -6,6 +6,8 @@ import com.example.errorNote.Repository.RepoSolution;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class SolutionImpl implements SolutionService {
@@ -50,6 +52,11 @@ public class SolutionImpl implements SolutionService {
     public String SupprimerSolution(Long idSolution) {
         repoSolution.deleteById(idSolution);
         return "Solution supprimée avec succès";
+    }
+
+    @Override
+    public List<Solution> AfficherToutesLesSolutions() {
+        return repoSolution.findAll();
     }
     //================FIN DE LA METHODE PERMETTANT DE SUPPRIMER UNE SOLUTION=========================
 

@@ -3,6 +3,8 @@ package com.example.errorNote.Service;
 import com.example.errorNote.Modele.Probleme;
 import com.example.errorNote.Modele.Solution;
 
+import java.util.List;
+
 public interface SolutionService {
 
     //================METHODE PERMETTANT DE CREER UNE SOLUTION=========================
@@ -16,4 +18,7 @@ public interface SolutionService {
 
     //================METHODE PERMETTANT DE SUPPRIMER UNE SOLUTION=========================
     String SupprimerSolution(Long idSolution);
+
+    //================METHODE PERMETTANT D'AFFICHER TOUTES LES SOLUTIONS=========================
+    List<Solution> AfficherToutesLesSolutions();
 }

@@ -8,5 +8,5 @@ public interface CommentaireService {
 
 
     //================METHODE PERMETTANT DE CREER UN COMMENTAIRE=========================
-    String AjouterCommentaireAutre(String contComAutre, Long idSolution, Long idUtilisateur);
+    Commentaire AjoutCommentaire(Commentaire contenuCommentaire);
 }

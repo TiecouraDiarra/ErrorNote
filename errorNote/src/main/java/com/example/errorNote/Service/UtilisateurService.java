@@ -18,6 +18,6 @@ public interface UtilisateurService {
 
 
     //================METHODE PERMETTANT DE RECUPERER L'EMAIL D'UN UTILISATEUR=========================
-    //Utilisateur TrouverParEmail(String emailUtilisateur);
+    Utilisateur TrouverParEmail(String emailUtilisateur);
 
 }

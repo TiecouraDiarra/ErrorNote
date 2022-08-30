@@ -27,5 +27,5 @@ public class Commentaire {
     //================LA CLEF PRIMAIRE DE LA CLASSE UTILISATEUR=========================
     @ManyToOne
     @JoinColumn(name = "id_utilisateurs")
-    private Utilisateur AutresUtilisateurs;
+    private Utilisateur utilisateur;
 }

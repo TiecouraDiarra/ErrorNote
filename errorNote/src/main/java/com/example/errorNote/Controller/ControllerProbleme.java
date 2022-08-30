@@ -36,7 +36,7 @@ public class ControllerProbleme {
     @Autowired
     private EtatService etatService;
 
-    @ApiOperation(value = "Créer un problème")
+    /*@ApiOperation(value = "Créer un problème")
     @PostMapping("/creer/{idUtilisateur}")
     public Object creerProbleme(@RequestBody Probleme probleme, @PathVariable("idUtilisateur") Long idUtilisateur){
         Utilisateur utilisateur = utilisateurService.RecupererParId(idUtilisateur);
@@ -49,8 +49,33 @@ public class ControllerProbleme {
         }
 
 
-    }
+    }*/
 
+    //================DEBUT DE LA METHODE PERMETTANT DE CREER UN PROBLEME====================================
+    @ApiOperation(value = "Créer un problème(Verification)")
+    @PostMapping("/create/{emailUtilisateur}/{password}")
+    public String create(@RequestBody Probleme probleme, @PathVariable("emailUtilisateur") String emailUtilisateur, @PathVariable("password") String password){
+
+        //instanciation de User en user et user1 pour recuperer l'email et le mot de pass
+        Utilisateur user = utilisateurService.TrouverParEmail(emailUtilisateur);
+
+        if (user == null) return "Email incorrect!";
+        else if (!user.getPassword().equals(password)) return "Mot de passe incorrect!";
+        //recupère le password de l'email qu'il a saisie et verifie s'il est egale au password saisie en url
+        else {
+            // A la table probleme on affecte la valeur recuperer dans user1 et user
+            probleme.setUtilisateur(user);
+
+            this.problemeService.CreerProbleme(probleme);
+
+            return "Problème crée avec succès";
+        }
+
+    }
+    //================FIN DE LA METHODE PERMETTANT DE CREER UN PROBLEME====================================
+
+
+    //================DEBUT DE LA METHODE PERMETTANT DE RECHERCHER UN PROBLEME PAR MOT CLEF====================================
     @ApiOperation(value = "Recherche de probleme par mot clé (Description) ")
     @GetMapping("/recherche/{descriptionProbleme}")
     public List<Probleme> RechercherProbleme(@Param("descriptionProbleme") @PathVariable String descriptionProbleme){
@@ -58,34 +83,72 @@ public class ControllerProbleme {
         return problemeService.Rechercher(descriptionProbleme);
     }
 
+    //================FIN DE LA METHODE PERMETTANT DE RECHERCHER UN PROBLEME PAR MOT CLEF====================================
+
+
+    //================DEBUT DE LA METHODE PERMETTANT DE MODIFIER UN PROBLEME====================================
     @ApiOperation(value = "Modifier un problème ")
-    @PutMapping("/modifier/{idProbleme}")
-    public Probleme update(@PathVariable Long idProbleme, @RequestBody Probleme probleme){
-        return problemeService.modifier(idProbleme, probleme);
-    }
+    @PutMapping("/modifier/{emailUtilisateur}/{password}/{idProbleme}")
+    public String update(@PathVariable Long idProbleme, @RequestBody Probleme probleme,@PathVariable("emailUtilisateur") String emailUtilisateur, @PathVariable("password") String password){
 
+        //instanciation de User en user et user1 pour recuperer l'email et le mot de pass
+        Utilisateur user1 = utilisateurService.TrouverParEmail(emailUtilisateur);
+
+        if (user1 == null) return "Email incorrect!";
+        else if (!user1.getPassword().equals(password)) return "Mot de passe incorrect!";
+            //recupère le password de l'email qu'il a saisie et verifie s'il est egale au password saisie en url
+        else {
+            // A la table probleme on affecte la valeur recuperer dans user1 et user
+            probleme.setUtilisateur(user1);
+
+            this.problemeService.modifier(idProbleme, probleme);
+
+            return "Problème modifié avec succès";
+        }
+    }
+    //================FIN DE LA METHODE PERMETTANT DE MODIFIER UN PROBLEME====================================
+
+    //================DEBUT DE LA METHODE PERMETTANT DE CHANGER L'ETAT UN PROBLEME====================================
     @ApiOperation(value = "Modifier l'Etat du problème")
-    @PostMapping("/changeretat/{idProbleme}/{idEtat}")
-    public String changerEtat(@PathVariable("idProbleme") Long idProbleme,@PathVariable("idEtat") Long idEtat) {
-        return problemeService.changerEtatProbleme(idProbleme,idEtat);
-    }
+    @PostMapping("/changeretat/{emailUtilisateur}/{password}/{idProbleme}/{idEtat}")
+    public String changerEtat(@PathVariable("idProbleme") Long idProbleme,@PathVariable("idEtat") Long idEtat, @PathVariable("emailUtilisateur") String emailUtilisateur, @PathVariable("password") String password) {
+        //instanciation de User en user et user1 pour recuperer l'email et le mot de pass
+        Utilisateur user1 = utilisateurService.TrouverParEmail(emailUtilisateur);
 
+        if (user1 == null) return "Email incorrect!";
+        else if (!user1.getPassword().equals(password)) return "Mot de passe incorrect!";
+            //recupère le password de l'email qu'il a saisie et verifie s'il est egale au password saisie en url
+        else {
+            return problemeService.changerEtatProbleme(idProbleme,idEtat);
+        }
+    }
+    //================FIN DE LA METHODE PERMETTANT DE CHANGER L'ETAT UN PROBLEME====================================
+
+
+    //================DEBUT DE LA METHODE PERMETTANT DE SUPPRIMER UN PROBLEME====================================
     @ApiOperation(value = "Supprimer un problème")
-    @DeleteMapping("/supprimer/{idProbleme}/{idRole}")
-    public String deleteProbleme(@PathVariable Long idProbleme, @PathVariable("idRole") Long idRole){
+    @DeleteMapping("/supprimer/{emailUtilisateur}/{password}/{idProbleme}/{idRole}")
+    public String deleteProbleme(@PathVariable Long idProbleme, @PathVariable("idRole") Long idRole, @PathVariable("emailUtilisateur") String emailUtilisateur, @PathVariable("password") String password){
 
         Role role1 = roleService.RecupererParIdRole(idRole);
-        if (role1!=null && role1.getLibelleRole().equals("ADMIN")){
+        Utilisateur user1 = utilisateurService.TrouverParEmail(emailUtilisateur);
+        if (user1 == null) return "Email incorrect!";
+        else if (!user1.getPassword().equals(password)) return "Mot de passe incorrect!";
+        else if (role1!=null && role1.getLibelleRole().equals("ADMIN")){
             return problemeService.SupprimerProbleme(idProbleme);
         }else {
             return "Vous n'avez pas le droit de supprimer un probleme";
         }
     }
+    //================FIN DE LA METHODE PERMETTANT DE SUPPRIMER UN PROBLEME====================================
 
+
+    //================DEBUT DE LA METHODE PERMETTANT D'AFFICHER LA LISTE DES PROBLEMES====================================
     @ApiOperation(value = "Afficher la liste des problèmes")
     @GetMapping("/AfficherProbleme")
     public Iterable<Object[]> getProbleme(){
 
         return problemeService.AfficherTousLesProblemes();
     }
+    //================FIN DE LA METHODE PERMETTANT D'AFFICHER LA LISTE DES PROBLEMES====================================
 }
