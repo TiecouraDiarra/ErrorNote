@@ -22,4 +22,23 @@ public class CommentaireImpl implements CommentaireService{
         return repoCommentaire.save(contenuCommentaire);
     }
     //================FIN DE LA METHODE PERMETTANT DE CREER UN COMMENTAIRE=========================
+
+    //================DEBUT DE LA METHODE PERMETTANT DE MODIFIER UN COMMENTAIRE=========================
+    @Override
+    public Commentaire modifier(Long idCommentaire, Commentaire commentaire) {
+        return repoCommentaire.findById(idCommentaire)
+                .map(p->{
+                    p.setCommentaire(commentaire.getCommentaire());
+                    return repoCommentaire.save(p);
+                }).orElseThrow(() -> new RuntimeException("Commentaire non trouvé !"));
+    }
+    //================FIN DE LA METHODE PERMETTANT DE MODIFIER UN COMMENTAIRE=========================
+
+    //================DEBUT DE LA METHODE PERMETTANT DE SUPPRIMER UN COMMENTAIRE=========================
+    @Override
+    public String SupprimerCommentaire(Long idCommentaire) {
+        repoCommentaire.deleteById(idCommentaire);
+        return "Commentaire suprimé avec succès";
+    }
+    //================FIN DE LA METHODE PERMETTANT DE SUPPRIMER UN COMMENTAIRE=========================
 }

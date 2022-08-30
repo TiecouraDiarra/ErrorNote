@@ -1,9 +1,8 @@
 package com.example.errorNote.Controller;
 
-import com.example.errorNote.Modele.Probleme;
-import com.example.errorNote.Modele.Solution;
-import com.example.errorNote.Modele.Utilisateur;
+import com.example.errorNote.Modele.*;
 import com.example.errorNote.Service.ProblemeService;
+import com.example.errorNote.Service.RoleService;
 import com.example.errorNote.Service.SolutionService;
 import com.example.errorNote.Service.UtilisateurService;
 import io.swagger.annotations.Api;
@@ -11,8 +10,10 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -28,22 +29,35 @@ public class ControllerSolution {
 
     @Autowired
     private UtilisateurService utilisateurService;
+    @Autowired
+    private RoleService roleService;
 
     //================DEBUT DE LA METHODE PERMETTANT DE CREER UNE SOLUTION====================================
     @ApiOperation(value = "Créer une solution")
     @PostMapping("/solution/{emailUtilisateur}/{password}/{idProbleme}")
-    public Object creerSolution(@RequestBody Solution solution, @PathVariable("idProbleme") Long idProbleme, @PathVariable("emailUtilisateur") String emailUtilisateur, @PathVariable("password") String password){
+    public String creerSolution(@RequestBody Solution solution, @PathVariable("idProbleme") Long idProbleme, @PathVariable("emailUtilisateur") String emailUtilisateur, @PathVariable("password") String password){
         //instanciation de User en user et user1 pour recuperer l'email et le mot de pass
         Utilisateur user1 = utilisateurService.TrouverParEmail(emailUtilisateur);
         Probleme probleme = problemeService.RecupererParIdProbleme(idProbleme);
-        if (user1 == null) return "Email incorrect!";
-        else if (!user1.getPassword().equals(password)) return "Mot de passe incorrect!";
-        else if(probleme!=null){
-            solution.setProbleme(probleme);
-            solutionService.CreerSolution(solution);
-            return "Solution créée avec succès";
-        } else {
-            return "Vous essayez de donner la solution d'un problème qui n'existe pas !";
+        Solution s = solutionService.RetrouverParProbleme(solution.getProbleme());
+        //Solution s1 = solutionService.RetrouverParEtat(probleme.getEtat());
+        Role admin = roleService.getLibelleRolee("ADMIN");
+        if (s==null && probleme.getIdProbleme()!=idProbleme){
+            if (probleme!= null && user1 !=null){
+                if (probleme.getUtilisateur()==user1 || user1.getRole()==admin ){
+                    solution.setDateSolution(new Date());
+                    solution.setProbleme(probleme);
+                    //probleme.setEtat(new EtatProbleme(3L));
+                    solutionService.CreerSolution(solution);
+                    return "Probleme résolu avec succès !";
+                }else {
+                    return "Impossible de donner la solution à un problème qui ne vous appartient pas !";
+                }
+            }else {
+                return "Vous essayez d'attribuer un problème à un utilisateur qui n'existe pas !";
+            }
+        }else {
+            return "Ce problème est déja résolu";
         }
     }
     //================FIN DE LA METHODE PERMETTANT DE CREER UNE SOLUTION====================================

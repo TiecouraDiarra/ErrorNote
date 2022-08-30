@@ -33,11 +33,20 @@ public class ControllerUtilisateur {
     @PostMapping(value = "/creerUtilisateur/{idRole}")
     public Object ajouterUtilisateur(@RequestBody Utilisateur utilisateur, @PathVariable("idRole") Long idRole) {
         Role role = roleService.RecupererParIdRole(idRole);
-        if(role!=null){
-            utilisateur.setRole(role);
-            utilisateurService.AjouterUtilisateur(utilisateur);
+        //Utilisateur utilisateur1 = utilisateurService.TrouverParEmail(emailUtilisateur);
+        Utilisateur utilisateur1 = utilisateurService.TrouverParEmail(utilisateur.getEmailUtilisateur());
+        if(utilisateur1==null){
+            if(role!=null){
+                utilisateur.setRole(role);
+                utilisateurService.AjouterUtilisateur(utilisateur);
+                return "Compte creer avec succes " + utilisateur.getNomUtilisateur()+ " " +utilisateur.getPrenomUtilisateur();
+            }else {
+                return "Vous essayer d'attribuer un rôle qui n'existe pas";
+            }
+        }else {
+            return "Cet utilisateur exite déja";
         }
-        return "Compte creer avec succes " + utilisateur.getNomUtilisateur();
+
     }
 
     //================FIN DE LA METHODE PERMETTANT DE CREER UN UTILISATEUR====================================
@@ -61,15 +70,15 @@ public class ControllerUtilisateur {
 
     //================DEBUT DE LA METHODE PERMETTANT DE SUPPRIMER UN UTILISATEUR====================================
     @ApiOperation(value = "Supprimer un utilisateur")
-    @DeleteMapping("/supprimer/{idUtilisateur}/{idRole}")
-    public String deleteUser(@PathVariable Long idUtilisateur, @RequestBody Utilisateur utilisateur, @PathVariable("idRole") Long idRole, @PathVariable("emailUtilisateur") String emailUtilisateur, @PathVariable("password") String password){
+    @DeleteMapping("/supprimer/{emailUtilisateur}/{password}/{idUtilisateurASupprimer}/{idRole}")
+    public String deleteUser(@PathVariable Long idUtilisateurASupprimer, @PathVariable("idRole") Long idRole, @PathVariable("emailUtilisateur") String emailUtilisateur, @PathVariable("password") String password){
         //instanciation de User en user et user1 pour recuperer l'email et le mot de pass
         Utilisateur user1 = utilisateurService.TrouverParEmail(emailUtilisateur);
         Role role1 = roleService.RecupererParIdRole(idRole);
         if (user1 == null) return "Email incorrect!";
         else if (!user1.getPassword().equals(password)) return "Mot de passe incorrect!";
         else if (role1!=null && role1.getLibelleRole().equals("ADMIN")){
-            return utilisateurService.Supprimer(idUtilisateur);
+            return utilisateurService.Supprimer(idUtilisateurASupprimer);
         }else {
             return "Vous n'avez pas le droit de supprimer un utilisateur";
         }

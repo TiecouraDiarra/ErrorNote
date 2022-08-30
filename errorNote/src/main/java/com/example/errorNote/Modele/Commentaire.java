@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "commentaire")
@@ -18,6 +19,7 @@ public class Commentaire {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idComm;
     private String commentaire;
+    private Date dateCommentaire;
 
     //================LA CLEF PRIMAIRE DE LA CLASSE SOLUTION=========================
     @ManyToOne

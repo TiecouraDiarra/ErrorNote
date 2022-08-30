@@ -1,5 +1,6 @@
 package com.example.errorNote.Service;
 
+import com.example.errorNote.Modele.EtatProbleme;
 import com.example.errorNote.Modele.Probleme;
 import com.example.errorNote.Modele.Solution;
 
@@ -21,4 +22,10 @@ public interface SolutionService {
 
     //================METHODE PERMETTANT D'AFFICHER TOUTES LES SOLUTIONS=========================
     List<Solution> AfficherToutesLesSolutions();
+
+    //================METHODE PERMETTANT DE RETROUVER PAR PROBLEME=========================
+    Solution RetrouverParProbleme(Probleme probleme);
+
+
+    //Solution RetrouverParEtat(EtatProbleme etatProbleme);
 }

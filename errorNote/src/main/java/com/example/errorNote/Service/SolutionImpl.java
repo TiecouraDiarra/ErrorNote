@@ -1,6 +1,8 @@
 package com.example.errorNote.Service;
 
 
+import com.example.errorNote.Modele.EtatProbleme;
+import com.example.errorNote.Modele.Probleme;
 import com.example.errorNote.Modele.Solution;
 import com.example.errorNote.Repository.RepoSolution;
 import lombok.AllArgsConstructor;
@@ -53,11 +55,26 @@ public class SolutionImpl implements SolutionService {
         repoSolution.deleteById(idSolution);
         return "Solution supprimée avec succès";
     }
+    //================FIN DE LA METHODE PERMETTANT DE SUPPRIMER UNE SOLUTION=========================
 
+    //================DEBUT DE LA METHODE PERMETTANT D'AFFICHER TOUTES LES SOLUTIONS=========================
     @Override
     public List<Solution> AfficherToutesLesSolutions() {
         return repoSolution.findAll();
     }
-    //================FIN DE LA METHODE PERMETTANT DE SUPPRIMER UNE SOLUTION=========================
+    //================FIN DE LA METHODE PERMETTANT D'AFFICHER TOUTES LES SOLUTIONS=========================
+
+
+    //================DEBUT DE LA METHODE PERMETTANT DE RECUPERER UN PROBLEME=========================
+    @Override
+    public Solution RetrouverParProbleme(Probleme probleme) {
+        return repoSolution.findByProbleme(probleme);
+    }
+
+    /*@Override
+    public Solution RetrouverParEtat(EtatProbleme etatProbleme) {
+        return repoSolution.findByEtat(etatProbleme);
+    }*/
+    //================FIN DE LA METHODE PERMETTANT DE RECUPERER UN PROBLEME=========================
 
 }

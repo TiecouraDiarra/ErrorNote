@@ -21,4 +21,19 @@ public class RoleImpl implements RoleService{
         return repoRole.findById(idRole).get();
     }
     //================FIN DE LA METHODE PERMETTANT DE RECUPERER L'IDENTIFIANT D'UN ROLE=========================
+
+    //================DEBUT DE LA METHODE PERMETTANT DE RECUPERER LE LIBELLE D'UN ROLE=========================
+    @Override
+    public Role getLibelleRolee(String libelleRole) {
+        return repoRole.findByLibelleRole(libelleRole);
+    }
+    //================FIN DE LA METHODE PERMETTANT DE RECUPERER LE LIBELLE D'UN ROLE=========================
+
+
+    //================DEBUT DE LA METHODE PERMETTANT D'AJOUTER UN ROLE=========================
+    @Override
+    public Role AjouterRole(Role role) {
+        return repoRole.save(role);
+    }
+    //================FIN DE LA METHODE PERMETTANT D'AJOUTER UN ROLE=========================
 }

@@ -22,4 +22,11 @@ public class EtatImpl implements EtatService{
     }
     //================FIN DE LA METHODE PERMETTANT DE RECUPERER L'IDENTIFIANT DE L'ETAT D'UN PROBLEME=========================
 
+    //================DEBUT DE LA METHODE PERMETTANT D'AJOUTER LES ETATS =========================
+    @Override
+    public EtatProbleme AjouterEtat(EtatProbleme etatProbleme) {
+        return repoEtat.save(etatProbleme);
+    }
+    //================FIN DE LA METHODE PERMETTANT D'AJOUTER LES ETATS =========================
+
 }

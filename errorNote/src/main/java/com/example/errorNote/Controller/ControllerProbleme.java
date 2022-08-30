@@ -1,10 +1,7 @@
 package com.example.errorNote.Controller;
 
 
-import com.example.errorNote.Modele.EtatProbleme;
-import com.example.errorNote.Modele.Probleme;
-import com.example.errorNote.Modele.Role;
-import com.example.errorNote.Modele.Utilisateur;
+import com.example.errorNote.Modele.*;
 import com.example.errorNote.Service.EtatService;
 import com.example.errorNote.Service.ProblemeService;
 import com.example.errorNote.Service.RoleService;
@@ -17,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -58,14 +56,15 @@ public class ControllerProbleme {
 
         //instanciation de User en user et user1 pour recuperer l'email et le mot de pass
         Utilisateur user = utilisateurService.TrouverParEmail(emailUtilisateur);
+        Role admin = roleService.getLibelleRolee("ADMIN");
 
         if (user == null) return "Email incorrect!";
         else if (!user.getPassword().equals(password)) return "Mot de passe incorrect!";
         //recupère le password de l'email qu'il a saisie et verifie s'il est egale au password saisie en url
         else {
+            probleme.setDateProbleme(new Date());
             // A la table probleme on affecte la valeur recuperer dans user1 et user
             probleme.setUtilisateur(user);
-
             this.problemeService.CreerProbleme(probleme);
 
             return "Problème crée avec succès";
