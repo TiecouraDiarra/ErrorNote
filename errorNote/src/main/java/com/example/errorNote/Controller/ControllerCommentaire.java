@@ -63,7 +63,7 @@ public class ControllerCommentaire {
     }
     //================FIN DE LA METHODE PERMETTANT D'AFFICHER LES COMMENTAIRES====================================
 
-    //================DEBUT DE LA METHODE PERMETTANT D'AFFICHER LES COMMENTAIRES====================================
+    //================DEBUT DE LA METHODE PERMETTANT DE MODIFIER UN COMMENTAIRE====================================
     @ApiOperation(value = "Modifier un commentaire")
     @PutMapping("/Modifier/{emailUtilisateur}/{password}/{idComm}")
     public String update(@RequestBody Commentaire commentaire, @Param("idComm") @PathVariable long idComm,@PathVariable("emailUtilisateur") String emailUtilisateur, @PathVariable("password") String password){
@@ -82,7 +82,7 @@ public class ControllerCommentaire {
             return "Impossible de modifier un commentaire qui ne vous appartient pas !";
         }
     }
-    //================FIN DE LA METHODE PERMETTANT D'AFFICHER LES COMMENTAIRES====================================
+    //================FIN DE LA METHODE PERMETTANT DE MODIFIER UN COMMENTAIRE====================================
 
     //================DEBUT DE LA METHODE PERMETTANT DE SUPPRIMER UN COMMENTAIRE====================================
     @ApiOperation(value = "Supprimer un commentaire")
@@ -96,7 +96,7 @@ public class ControllerCommentaire {
             commentaireService.SupprimerCommentaire(idCommentaire);
             return "Commentaire supprimé avec succès !";
         }else {
-            return "Vous n'avez pas le droit de supprimer un probleme";
+            return "Vous n'avez pas le droit de supprimer un commentaire";
         }
     }
     //================FIN DE LA METHODE PERMETTANT DE SUPPRIMER UN COMMENTAIRE====================================
