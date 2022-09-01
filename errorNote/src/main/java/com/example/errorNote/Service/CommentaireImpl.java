@@ -41,4 +41,15 @@ public class CommentaireImpl implements CommentaireService{
         return "Commentaire suprimé avec succès";
     }
     //================FIN DE LA METHODE PERMETTANT DE SUPPRIMER UN COMMENTAIRE=========================
+
+    //================DEBUT DE LA METHODE PERMETTANT DE RECUPERER L'IDENTIFIANT DU COMMENTAIRE=========================
+    @Override
+    public Commentaire RecupererParIdCommentaire(Long idCom) {
+        try {
+            return repoCommentaire.findById(idCom).get();
+        }catch (Exception e){
+            return null;
+        }
+    }
+    //================FIN DE LA METHODE PERMETTANT DE RECUPERER L'IDENTIFIANT UN COMMENTAIRE=========================
 }

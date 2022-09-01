@@ -1,5 +1,6 @@
 package com.example.errorNote.Modele;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,11 +24,13 @@ public class Commentaire {
 
     //================LA CLEF PRIMAIRE DE LA CLASSE SOLUTION=========================
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "id_solution")
     private Solution solution;
 
     //================LA CLEF PRIMAIRE DE LA CLASSE UTILISATEUR=========================
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "id_utilisateurs")
     private Utilisateur utilisateur;
 }

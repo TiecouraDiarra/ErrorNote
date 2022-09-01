@@ -27,5 +27,5 @@ public interface ProblemeService {
     String SupprimerProbleme(Long idProbleme);
 
     //================METHODE PERMETTANT D'AFFICHER LA LISTE DES PROBLEME=========================
-    Iterable<Object[]> AfficherTousLesProblemes();
+    List<Probleme> AfficherTousLesProblemes1();
 }

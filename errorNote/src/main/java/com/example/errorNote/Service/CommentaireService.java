@@ -16,4 +16,7 @@ public interface CommentaireService {
 
     //================METHODE PERMETTANT DE SUPPRIMER UN COMMENTAIRE=========================
     String SupprimerCommentaire(Long idCommentaire);
+
+    //================METHODE PERMETTANT DE RECUPERER L'IDENTIFIANT D'UN PROBLEME=========================
+    Commentaire RecupererParIdCommentaire(Long idCom);
 }

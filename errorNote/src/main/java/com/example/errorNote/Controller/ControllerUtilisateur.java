@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "Utilisateur")
 @NoArgsConstructor
@@ -84,5 +86,29 @@ public class ControllerUtilisateur {
         }
     }
     //================FIN DE LA METHODE PERMETTANT DE SUPPRIMER UN UTILISATEUR====================================
+
+    //================DEBUT DE LA METHODE PERMETTANT D'AFFICHER TOUS LES UTILISATEURS ET ADMINS====================================
+    @ApiOperation(value = "Afficher tous les utilisateurs et Administrateurs")
+    @GetMapping("/AfficherUtilisateursAdmins")
+    public List<Utilisateur> readLesUsers(){
+        return utilisateurService.AfficherTousLesUtilisateurs();
+    }
+    //================FIN DE LA METHODE PERMETTANT D'AFFICHER TOUS LES UTILISATEURS ET ADMINS====================================
+
+    //================DEBUT DE LA METHODE PERMETTANT D'AFFICHER TOUS LES ADMINISTRATEURS====================================
+    @ApiOperation(value = "Afficher tous les administrateurs")
+    @GetMapping("/AfficherAdmin")
+    public List<Utilisateur> readLesAdmins(){
+        return utilisateurService.AfficherTousLesAdmin();
+    }
+    //================FIN DE LA METHODE PERMETTANT D'AFFICHER TOUS LES ADMINISTRATEURS====================================
+
+    //================DEBUT DE LA METHODE PERMETTANT D'AFFICHER TOUS LES UTILISATEURS SIMPLES====================================
+    @ApiOperation(value = "Afficher tous les utilisateurs simples")
+    @GetMapping("/AfficherUtilisateursSimples")
+    public List<Utilisateur> readLesUserSimples(){
+        return utilisateurService.AfficherTousLesUserSimple();
+    }
+    //================FIN DE LA METHODE PERMETTANT D'AFFICHER TOUS LES UTILISATEURS SIMPLES====================================
 
 }

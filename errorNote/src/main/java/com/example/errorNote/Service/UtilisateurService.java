@@ -1,6 +1,9 @@
 package com.example.errorNote.Service;
 
+import com.example.errorNote.Modele.Probleme;
 import com.example.errorNote.Modele.Utilisateur;
+
+import java.util.List;
 
 public interface UtilisateurService {
 
@@ -19,5 +22,15 @@ public interface UtilisateurService {
 
     //================METHODE PERMETTANT DE RECUPERER L'EMAIL D'UN UTILISATEUR=========================
     Utilisateur TrouverParEmail(String emailUtilisateur);
+
+    //================METHODE PERMETTANT D'AFFICHER TOUS LES UTILISATEURS ET ADMINS=========================
+    List<Utilisateur> AfficherTousLesUtilisateurs();
+
+    //================METHODE PERMETTANT D'AFFICHER TOUS LES ADMINISTRATEURS=========================
+    List<Utilisateur> AfficherTousLesAdmin();
+
+    //================METHODE PERMETTANT D'AFFICHER TOUS LES UTILISATEURS SIMPLES=========================
+    List<Utilisateur> AfficherTousLesUserSimple();
+
 
 }

@@ -21,11 +21,16 @@ public class ControllerEtat {
     @Autowired
     private EtatService etatService;
 
+
+    //================DEBUT DE LA METHODE PERMETTANT D'AJOUTER UN ETAT====================================
     @ApiOperation(value = "Ajouter un état")
     @PostMapping("/ajouter")
     public String create(@RequestBody EtatProbleme etatProbleme){
         etatService.AjouterEtat(etatProbleme);
         return "Etat ajouté avec succès";
     }
+    //================DEBUT DE LA METHODE PERMETTANT D'AJOUTER UN ETAT====================================
+
+
 
 }

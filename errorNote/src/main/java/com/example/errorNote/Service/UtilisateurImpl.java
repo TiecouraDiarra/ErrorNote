@@ -8,6 +8,8 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 @Data
@@ -21,10 +23,10 @@ public class UtilisateurImpl implements UtilisateurService {
     @Autowired
     private RepoProbleme repoProbleme;
 
+
     //================DEBUT DE LA METHODE PERMETTANT D'AJOUTER UN UTILISATEUR=========================
     @Override
     public Utilisateur AjouterUtilisateur(Utilisateur utilisateur) {
-
         return repoUtilisateur.save(utilisateur);
     }
     //================FIN DE LA METHODE PERMETTANT D'AJOUTER UN UTILISATEUR=========================
@@ -73,4 +75,26 @@ public class UtilisateurImpl implements UtilisateurService {
         return repoUtilisateur.findByEmailUtilisateur(emailUtilisateur);
     }
     //================FIN DE LA METHODE PERMETTANT DE RECUPERER L'EMAIL D'UN UTILISATEUR=========================
+
+
+    //================DEBUT DE LA METHODE PERMETTANT D'AFFICHER TOUS LES UTILISATEURS ET ADMINS=========================
+    @Override
+    public List<Utilisateur> AfficherTousLesUtilisateurs() {
+        return repoUtilisateur.findAll();
+    }
+    //================FIN DE LA METHODE PERMETTANT D'AFFICHER TOUS LES UTILISATEURS ET ADMINS=========================
+
+    //================DEBUT DE LA METHODE PERMETTANT D'AFFICHER TOUS LES ADMINISTRATEURS=========================
+    @Override
+    public List<Utilisateur> AfficherTousLesAdmin() {
+        return repoUtilisateur.AfficherTousLesAdmins();
+    }
+    //================FIN DE LA METHODE PERMETTANT D'AFFICHER TOUS LES ADMINISTRATEURS=========================
+
+    //================DEBUT DE LA METHODE PERMETTANT D'AFFICHER TOUS LES UTILISATEURS SIMPLES=========================
+    @Override
+    public List<Utilisateur> AfficherTousLesUserSimple() {
+        return repoUtilisateur.AfficherTousLesUserSimples();
+    }
+    //================FIN DE LA METHODE PERMETTANT D'AFFICHER TOUS LES UTILISATEURS SIMPLES=========================
 }

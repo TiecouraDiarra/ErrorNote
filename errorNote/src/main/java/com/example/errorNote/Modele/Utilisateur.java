@@ -28,7 +28,7 @@ public class Utilisateur {
 
     //================LA CLEF PRIMAIRE DE LA CLASSE ROLE=========================
     @ManyToOne
-    @JsonIgnore
+    //@JsonIgnore
     @JoinColumn(name = "id_role")
     private Role role;
 

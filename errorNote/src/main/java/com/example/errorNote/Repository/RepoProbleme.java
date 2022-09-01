@@ -16,9 +16,4 @@ public interface RepoProbleme extends JpaRepository<Probleme, Long> {
     //================FIN DE LA REQUETE PERMETTANT DE RECHERCHER PAR MOT CLEF UN PROBLEME=========================
 
 
-    //================DEBUT DE LA REQUETE PERMETTANT D'AFFICHER LA LISTE DES PROBLEMES=========================
-    @Query(value = "SELECT * from probleme", nativeQuery = true)
-    Iterable<Object[]> AfficherTousLesProblemes();
-
-    //================FIN DE LA REQUETE PERMETTANT D'AFFICHER LA LISTE DES PROBLEMES=========================
 }

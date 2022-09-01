@@ -23,10 +23,12 @@ public class ControllerRole {
     @Autowired
     private RoleService roleService;
 
+    //================DEBUT DE LA METHODE PERMETTANT D'AJOUTER UN ROLE====================================
     @ApiOperation(value = "Ajouter un Rôle")
     @PostMapping("/ajouter")
     public String create(@RequestBody Role role){
         roleService.AjouterRole(role);
         return "Role ajouté avec succès";
     }
+    //================DEBUT DE LA METHODE PERMETTANT D'AJOUTER UN ROLE====================================
 }

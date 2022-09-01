@@ -74,8 +74,8 @@ public class ProblemeImpl implements ProblemeService {
 
     //================DEBUT DE LA METHODE PERMETTANT D'AFFICHER TOUS LES PROBLEMES=========================
     @Override
-    public Iterable<Object[]> AfficherTousLesProblemes() {
-        return repoProbleme.AfficherTousLesProblemes();
+    public List<Probleme> AfficherTousLesProblemes1() {
+        return repoProbleme.findAll();
     }
 
     //================FIN DE LA METHODE PERMETTANT D'AFFICHER TOUS LES PROBLEMES=========================

@@ -56,7 +56,8 @@ public class ControllerProbleme {
 
         //instanciation de User en user et user1 pour recuperer l'email et le mot de pass
         Utilisateur user = utilisateurService.TrouverParEmail(emailUtilisateur);
-        Role admin = roleService.getLibelleRolee("ADMIN");
+        //Utilisateur utilisateur = utilisateurService.RecupererParId(idUtilisateur);
+        //Role admin = roleService.getLibelleRolee("ADMIN");
 
         if (user == null) return "Email incorrect!";
         else if (!user.getPassword().equals(password)) return "Mot de passe incorrect!";
@@ -92,34 +93,49 @@ public class ControllerProbleme {
 
         //instanciation de User en user et user1 pour recuperer l'email et le mot de pass
         Utilisateur user1 = utilisateurService.TrouverParEmail(emailUtilisateur);
+        Role admin = roleService.getLibelleRolee("ADMIN");
 
         if (user1 == null) return "Email incorrect!";
         else if (!user1.getPassword().equals(password)) return "Mot de passe incorrect!";
             //recupère le password de l'email qu'il a saisie et verifie s'il est egale au password saisie en url
-        else {
+        else if (probleme.getUtilisateur()==user1 || user1.getRole()==admin ){
+            probleme.setDateProbleme(new Date());
+            probleme.setUtilisateur(user1);
+            this.problemeService.modifier(idProbleme, probleme);
+            return "Problème modifié avec succès\" !";
+        }else {
+            return "Impossible de modifier un problème qui ne vous appartient pas !";
+        }
+        /*else {
             // A la table probleme on affecte la valeur recuperer dans user1 et user
             probleme.setUtilisateur(user1);
 
             this.problemeService.modifier(idProbleme, probleme);
 
             return "Problème modifié avec succès";
-        }
+        }*/
     }
     //================FIN DE LA METHODE PERMETTANT DE MODIFIER UN PROBLEME====================================
 
     //================DEBUT DE LA METHODE PERMETTANT DE CHANGER L'ETAT UN PROBLEME====================================
     @ApiOperation(value = "Modifier l'Etat du problème")
     @PostMapping("/changeretat/{emailUtilisateur}/{password}/{idProbleme}/{idEtat}")
-    public String changerEtat(@PathVariable("idProbleme") Long idProbleme,@PathVariable("idEtat") Long idEtat, @PathVariable("emailUtilisateur") String emailUtilisateur, @PathVariable("password") String password) {
+    public String changerEtat(Probleme probleme,@PathVariable("idProbleme") Long idProbleme,@PathVariable("idEtat") Long idEtat, @PathVariable("emailUtilisateur") String emailUtilisateur, @PathVariable("password") String password) {
         //instanciation de User en user et user1 pour recuperer l'email et le mot de pass
         Utilisateur user1 = utilisateurService.TrouverParEmail(emailUtilisateur);
+        Role admin = roleService.getLibelleRolee("ADMIN");
 
         if (user1 == null) return "Email incorrect!";
         else if (!user1.getPassword().equals(password)) return "Mot de passe incorrect!";
             //recupère le password de l'email qu'il a saisie et verifie s'il est egale au password saisie en url
-        else {
+        else if (probleme.getUtilisateur()==user1 || user1.getRole()==admin ){
             return problemeService.changerEtatProbleme(idProbleme,idEtat);
+        }else {
+            return "Impossible de modifier l'état d'un problème qui ne vous appartient pas !";
         }
+        /*else {
+            return problemeService.changerEtatProbleme(idProbleme,idEtat);
+        }*/
     }
     //================FIN DE LA METHODE PERMETTANT DE CHANGER L'ETAT UN PROBLEME====================================
 
@@ -143,11 +159,10 @@ public class ControllerProbleme {
 
 
     //================DEBUT DE LA METHODE PERMETTANT D'AFFICHER LA LISTE DES PROBLEMES====================================
-    @ApiOperation(value = "Afficher la liste des problèmes")
+    @ApiOperation(value = "Afficher la liste des problèmes1")
     @GetMapping("/AfficherProbleme")
-    public Iterable<Object[]> getProbleme(){
-
-        return problemeService.AfficherTousLesProblemes();
+    public List<Probleme> read(){
+        return problemeService.AfficherTousLesProblemes1();
     }
     //================FIN DE LA METHODE PERMETTANT D'AFFICHER LA LISTE DES PROBLEMES====================================
 }
