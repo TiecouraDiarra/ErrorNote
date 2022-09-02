@@ -76,7 +76,7 @@ public class ControllerCommentaire {
         else if (commentaire.getUtilisateur()==user1 || user1.getRole()==admin ){
             commentaire.setDateCommentaire(new Date());
             //solution.setProbleme(probleme);
-            commentaireService.modifier(idComm,commentaire);
+            commentaireService.modifier(idComm, commentaire);
             return "Commentaire modifié avec succès !";
         }else {
             return "Impossible de modifier un commentaire qui ne vous appartient pas !";
@@ -86,17 +86,18 @@ public class ControllerCommentaire {
 
     //================DEBUT DE LA METHODE PERMETTANT DE SUPPRIMER UN COMMENTAIRE====================================
     @ApiOperation(value = "Supprimer un commentaire")
-    @DeleteMapping("/supprimer/{emailUtilisateur}/{password}/{idCommentaire}/{idRole}")
-    public String deleteProbleme(@PathVariable Long idCommentaire, @PathVariable("idRole") Long idRole, @PathVariable("emailUtilisateur") String emailUtilisateur, @PathVariable("password") String password){
-        Role role1 = roleService.RecupererParIdRole(idRole);
+    @DeleteMapping("/supprimer/{emailUtilisateur}/{password}/{idCommentaire}")
+    public String deleteProbleme(@PathVariable Long idCommentaire, @PathVariable("emailUtilisateur") String emailUtilisateur, @PathVariable("password") String password){
         Utilisateur user1 = utilisateurService.TrouverParEmail(emailUtilisateur);
+        Role admin = roleService.getLibelleRolee("ADMIN");
+        Commentaire commentaire = commentaireService.RecupererParIdCommentaire(idCommentaire);
         if (user1 == null) return "Email incorrect!";
         else if (!user1.getPassword().equals(password)) return "Mot de passe incorrect!";
-        else if (role1!=null && role1.getLibelleRole().equals("ADMIN")){
+        else if (commentaire.getUtilisateur()==user1 || user1.getRole()==admin ){
             commentaireService.SupprimerCommentaire(idCommentaire);
             return "Commentaire supprimé avec succès !";
         }else {
-            return "Vous n'avez pas le droit de supprimer un commentaire";
+            return "Impossible de supprimer un commentaire qui ne vous appartient pas !";
         }
     }
     //================FIN DE LA METHODE PERMETTANT DE SUPPRIMER UN COMMENTAIRE====================================

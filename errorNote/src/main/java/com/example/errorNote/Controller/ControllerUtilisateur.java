@@ -31,27 +31,45 @@ public class ControllerUtilisateur {
 
 
     //================DEBUT DE LA METHODE PERMETTANT DE CREER UN UTILISATEUR====================================
-    @ApiOperation(value = "Creation d'un utilisateur")
-    @PostMapping(value = "/creerUtilisateur/{idRole}")
-    public Object ajouterUtilisateur(@RequestBody Utilisateur utilisateur, @PathVariable("idRole") Long idRole) {
-        Role role = roleService.RecupererParIdRole(idRole);
-        //Utilisateur utilisateur1 = utilisateurService.TrouverParEmail(emailUtilisateur);
-        Utilisateur utilisateur1 = utilisateurService.TrouverParEmail(utilisateur.getEmailUtilisateur());
-        if(utilisateur1==null){
-            if(role!=null){
-                utilisateur.setRole(role);
-                utilisateurService.AjouterUtilisateur(utilisateur);
-                return "Compte creer avec succes " + utilisateur.getNomUtilisateur()+ " " +utilisateur.getPrenomUtilisateur();
-            }else {
-                return "Vous essayer d'attribuer un rôle qui n'existe pas";
-            }
-        }else {
-            return "Cet utilisateur exite déja";
+    @ApiOperation(value = "Pour la création d'un user simple")
+    @PostMapping("/create/")
+    public Object create(@RequestBody Utilisateur user) {
+        Utilisateur u = utilisateurService.TrouverParEmail(user.getEmailUtilisateur());
+        Role role = roleService.getLibelleRolee("USER");
+
+        if (u == null) {
+            user.setRole(role);
+            return utilisateurService.AjouterUtilisateur(user);
+
+        } else {
+            return "Cet utilisateur existe deja!!";
         }
 
     }
 
     //================FIN DE LA METHODE PERMETTANT DE CREER UN UTILISATEUR====================================
+
+    //================DEBUT DE LA METHODE PERMETTANT DE CREER UN ADMIN====================================
+    @ApiOperation(value = "Pour la création d'un administrateur")
+    @PostMapping("/create/{idAdmin}")
+    public Object createAdmin(@RequestBody Utilisateur user, @PathVariable Long idAdmin) {
+        Utilisateur u = utilisateurService.TrouverParEmail(user.getEmailUtilisateur());
+        Utilisateur admin = utilisateurService.RecupererParId(idAdmin);
+        Role role = roleService.getLibelleRolee("ADMIN");
+
+        if (u == null) {
+            if (admin != null && admin.getRole() == role) {
+                user.setRole(role);
+                return utilisateurService.AjouterUtilisateur(user);
+            } else {
+                return "Vous essayez d'attribuez un role qui n'exsite pas!";
+            }
+        } else {
+            return "Cet utilisateur existe deja!!";
+        }
+
+    }
+    //================FIN DE LA METHODE PERMETTANT DE CREER UN ADMIN====================================
 
     //================DEBUT DE LA METHODE PERMETTANT DE MODIFIER UN UTILISATEUR====================================
     @ApiOperation(value = "Modifier un utilisateur")
