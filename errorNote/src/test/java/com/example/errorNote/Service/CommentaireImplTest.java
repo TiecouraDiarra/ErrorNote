@@ -40,12 +40,19 @@ class CommentaireImplTest {
             System.out.println("Mot de passe incorrect!");
         }
         else {
-            commentaire.setCommentaire("Fatim Bleni");
+            commentaire.setCommentaire("Bakary Bleni");
             commentaire.setDateCommentaire(new Date());
             commentaire.setSolution(solution);
             commentaire.setUtilisateur(user);
-            commentaireService.AjoutCommentaire(commentaire);
-            System.out.println("Commentaire Ajouté avec succès");
+
+            if (commentaire.getCommentaire().isEmpty()){
+                //System.out.println("Commentaire Ajouté avec succès");
+                System.out.println("Commentaire Non ajouté");
+            }else {
+                commentaireService.AjoutCommentaire(commentaire);
+                System.out.println("Commentaire Ajouté avec succès");
+            }
+
         }
     }
 
